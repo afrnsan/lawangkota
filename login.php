@@ -42,40 +42,6 @@ if (isset($_POST["login"])) {
     $error = true;
 }
 
-if (isset($_POST['login'])) {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    if ($username == '' or $password == '') {
-        $err .= "<li>Silakan masukkan username dan password</li>";
-    }
-    if (empty($err)) {
-        $sql1 = "select * from user where username = '$username'";
-        $q1 = mysqli_query($conn, $sql1);
-        $r1 = mysqli_fetch_array($q1);
-        if ($r1['password'] != md5($password)) {
-            $err .= "<li>Akun tidak ditemukan</li>";
-        }
-    }
-    if (empty($err)) {
-        $login_id = $r1['login_id'];
-        $sql1 = "select * from admin_akses where login_id = '$login_id'";
-        $q1 = mysqli_query($conn, $sql1);
-        while ($r1 = mysqli_fetch_array($q1)) {
-            $akses[] = $r1['akses_id']; //spp, guru, siswa
-        }
-        if (empty($akses)) {
-            $err .= "<li>Kamu tidak punya akses ke halaman admin</li>";
-        }
-    }
-    if (empty($err)) {
-        $_SESSION['admin_username'] = $username;
-        $_SESSION['admin_akses'] = $akses;
-        header("location:index.php");
-        exit();
-    }
-
-}
-
 ?>
 
 <!DOCTYPE html>
